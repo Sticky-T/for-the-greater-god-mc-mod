@@ -2,6 +2,7 @@ package io.github.Launchpad_Tristan.for_the_greater_god;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -19,7 +20,9 @@ public class FTGGCommands {
                 CommandManager.literal("ftggteam")
 
 
+                        // ==========================
                         // HELP
+                        // ==========================
                         .then(CommandManager.literal("help")
                                 .executes(context -> {
 
@@ -28,18 +31,20 @@ public class FTGGCommands {
 
                                     player.sendMessage(
                                             Text.literal("""
-                                    For The Greater God Commands:
+                                                    For The Greater God Commands:
 
-                                    /ftggteam join <team>
-                                    /ftggteam leave
-                                    /ftggteam info
+                                                    /ftggteam join <team>
+                                                    /ftggteam leave
+                                                    /ftggteam info
+                                                    /ftggteam base
 
-                                    Teams:
-                                    Zeus
-                                    Kronos
-                                    Hades
-                                    Poseidon
-                                    """).formatted(Formatting.RED),
+                                                    Teams:
+                                                    Zeus
+                                                    Kronos
+                                                    Hades
+                                                    Poseidon
+                                                    """)
+                                                    .formatted(Formatting.RED),
                                             false
                                     );
 
@@ -48,7 +53,9 @@ public class FTGGCommands {
                         )
 
 
+                        // ==========================
                         // INFO
+                        // ==========================
                         .then(CommandManager.literal("info")
                                 .executes(context -> {
 
@@ -68,7 +75,7 @@ public class FTGGCommands {
                                             );
 
 
-                                    if(team == null) {
+                                    if (team == null) {
 
                                         player.sendMessage(
                                                 Text.literal(
@@ -87,12 +94,15 @@ public class FTGGCommands {
                                         );
                                     }
 
+
                                     return 1;
                                 })
                         )
 
 
+                        // ==========================
                         // LEAVE
+                        // ==========================
                         .then(CommandManager.literal("leave")
                                 .executes(context -> {
 
@@ -112,7 +122,7 @@ public class FTGGCommands {
                                             );
 
 
-                                    if(oldTeam == null) {
+                                    if (oldTeam == null) {
 
                                         player.sendMessage(
                                                 Text.literal(
@@ -138,7 +148,7 @@ public class FTGGCommands {
                                             scoreboard.getTeam(oldTeam);
 
 
-                                    if(scoreboardTeam != null) {
+                                    if (scoreboardTeam != null) {
 
                                         scoreboard.removeScoreHolderFromTeam(
                                                 player.getNameForScoreboard(),
@@ -162,7 +172,9 @@ public class FTGGCommands {
                         )
 
 
+                        // ==========================
                         // JOIN
+                        // ==========================
                         .then(CommandManager.literal("join")
                                 .then(CommandManager.argument(
                                                 "team",
@@ -170,7 +182,6 @@ public class FTGGCommands {
                                         )
 
                                         .executes(context -> {
-
 
                                             ServerPlayerEntity player =
                                                     context.getSource().getPlayer();
@@ -191,8 +202,7 @@ public class FTGGCommands {
                                                     scoreboard.getTeam(chosen);
 
 
-
-                                            if(newTeam == null) {
+                                            if (newTeam == null) {
 
                                                 player.sendMessage(
                                                         Text.literal(
@@ -205,12 +215,10 @@ public class FTGGCommands {
                                             }
 
 
-
                                             TeamData data =
                                                     TeamData.get(
                                                             player.getServer().getOverworld()
                                                     );
-
 
 
                                             String oldTeam =
@@ -219,15 +227,13 @@ public class FTGGCommands {
                                                     );
 
 
-
-                                            // remove old scoreboard team
-                                            if(oldTeam != null) {
+                                            if (oldTeam != null) {
 
                                                 Team oldScoreboardTeam =
                                                         scoreboard.getTeam(oldTeam);
 
 
-                                                if(oldScoreboardTeam != null) {
+                                                if (oldScoreboardTeam != null) {
 
                                                     scoreboard.removeScoreHolderFromTeam(
                                                             player.getNameForScoreboard(),
@@ -237,21 +243,16 @@ public class FTGGCommands {
                                             }
 
 
-
-                                            // save permanently
                                             data.setTeam(
                                                     player.getUuid(),
                                                     chosen
                                             );
 
 
-
-                                            // update scoreboard display
                                             scoreboard.addScoreHolderToTeam(
                                                     player.getNameForScoreboard(),
                                                     newTeam
                                             );
-
 
 
                                             player.sendMessage(
@@ -268,6 +269,308 @@ public class FTGGCommands {
 
                                         }))
                         )
+                        // ==========================
+                        // BASE COMMANDS
+                        // ==========================
+                        .then(CommandManager.literal("base")
+
+                                // /ftggteam base set
+                                .then(CommandManager.literal("set")
+                                        .executes(context -> {
+
+                                            ServerPlayerEntity player =
+                                                    context.getSource().getPlayer();
+
+
+                                            TeamData data =
+                                                    TeamData.get(
+                                                            player.getServer().getOverworld()
+                                                    );
+
+
+                                            String team =
+                                                    data.getTeam(
+                                                            player.getUuid()
+                                                    );
+
+
+                                            if (team == null) {
+
+                                                player.sendMessage(
+                                                        Text.literal(
+                                                                "You must be in a team to set a base."
+                                                        ).formatted(Formatting.RED),
+                                                        false
+                                                );
+
+                                                return 0;
+                                            }
+
+
+                                            if (!data.isLeader(
+                                                    team,
+                                                    player.getUuid()
+                                            )) {
+
+                                                player.sendMessage(
+                                                        Text.literal(
+                                                                "Only the team leader can set the base."
+                                                        ).formatted(Formatting.RED),
+                                                        false
+                                                );
+
+                                                return 0;
+                                            }
+
+
+                                            data.setBase(
+                                                    team,
+                                                    player.getBlockPos()
+                                            );
+
+
+                                            player.sendMessage(
+                                                    Text.literal(
+                                                            "Base set for "
+                                                                    + team
+                                                                    + " at "
+                                                                    + player.getBlockPos()
+                                                    ).formatted(Formatting.GREEN),
+                                                    false
+                                            );
+
+
+                                            return 1;
+                                        })
+                                )
+
+
+                                // /ftggteam base info
+                                .then(CommandManager.literal("info")
+                                        .executes(context -> {
+
+                                            ServerPlayerEntity player =
+                                                    context.getSource().getPlayer();
+
+
+                                            TeamData data =
+                                                    TeamData.get(
+                                                            player.getServer().getOverworld()
+                                                    );
+
+
+                                            String team =
+                                                    data.getTeam(
+                                                            player.getUuid()
+                                                    );
+
+
+                                            if (team == null) {
+
+                                                player.sendMessage(
+                                                        Text.literal(
+                                                                "You are not in a team."
+                                                        ).formatted(Formatting.RED),
+                                                        false
+                                                );
+
+                                                return 0;
+                                            }
+
+
+                                            if (data.getBase(team) == null) {
+
+                                                player.sendMessage(
+                                                        Text.literal(
+                                                                "Your team does not have a base set."
+                                                        ).formatted(Formatting.RED),
+                                                        false
+                                                );
+
+                                                return 0;
+                                            }
+
+
+                                            player.sendMessage(
+                                                    Text.literal(
+                                                            "Team base: "
+                                                                    + data.getBase(team)
+                                                    ).formatted(Formatting.GREEN),
+                                                    false
+                                            );
+
+
+                                            return 1;
+                                        })
+                                )
+                        )
+
+
+                        // ==========================
+                        // ADMIN COMMANDS
+                        // ==========================
+                        .then(CommandManager.literal("admin")
+                                .requires(source -> source.hasPermissionLevel(2))
+
+
+                                // /ftggteam admin leader <team> <player>
+                                .then(CommandManager.literal("leader")
+                                        .then(CommandManager.argument(
+                                                                "team",
+                                                                StringArgumentType.word()
+                                                        )
+                                                        .then(CommandManager.argument(
+                                                                                "player",
+                                                                                StringArgumentType.word()
+                                                                        )
+                                                                        .executes(context -> {
+
+
+                                                                            String team =
+                                                                                    StringArgumentType.getString(
+                                                                                            context,
+                                                                                            "team"
+                                                                                    );
+
+
+                                                                            ServerPlayerEntity target =
+                                                                                    context.getSource()
+                                                                                            .getServer()
+                                                                                            .getPlayerManager()
+                                                                                            .getPlayer(
+                                                                                                    java.util.UUID.fromString(
+                                                                                                            StringArgumentType.getString(
+                                                                                                                    context,
+                                                                                                                    "player"
+                                                                                                            )
+                                                                                                    )
+                                                                                            );
+
+
+                                                                            if (target == null) {
+
+                                                                                context.getSource()
+                                                                                        .sendError(
+                                                                                                Text.literal(
+                                                                                                        "Player not found."
+                                                                                                )
+                                                                                        );
+
+                                                                                return 0;
+                                                                            }
+
+
+                                                                            TeamData data =
+                                                                                    TeamData.get(
+                                                                                            context.getSource()
+                                                                                                    .getServer()
+                                                                                                    .getOverworld()
+                                                                                    );
+
+
+                                                                            data.setLeader(
+                                                                                    team,
+                                                                                    target.getUuid()
+                                                                            );
+
+
+                                                                            context.getSource()
+                                                                                    .sendFeedback(
+                                                                                            () -> Text.literal(
+                                                                                                    "Set "
+                                                                                                            + target.getName().getString()
+                                                                                                            + " as leader of "
+                                                                                                            + team
+                                                                                            ).formatted(Formatting.GREEN),
+                                                                                            true
+                                                                                    );
+
+
+                                                                            return 1;
+
+                                                                        })
+                                                        )
+                                        )
+                                )
+
+
+                                // /ftggteam admin friendlyfire <team> <true/false>
+                                .then(CommandManager.literal("friendlyfire")
+                                        .then(CommandManager.argument(
+                                                                "team",
+                                                                StringArgumentType.word()
+                                                        )
+                                                        .then(CommandManager.argument(
+                                                                                "enabled",
+                                                                                BoolArgumentType.bool()
+                                                                        )
+                                                                        .executes(context -> {
+
+
+                                                                            String teamName =
+                                                                                    StringArgumentType.getString(
+                                                                                            context,
+                                                                                            "team"
+                                                                                    );
+
+
+                                                                            boolean enabled =
+                                                                                    BoolArgumentType.getBool(
+                                                                                            context,
+                                                                                            "enabled"
+                                                                                    );
+
+
+                                                                            Scoreboard scoreboard =
+                                                                                    context.getSource()
+                                                                                            .getServer()
+                                                                                            .getScoreboard();
+
+
+                                                                            Team team =
+                                                                                    scoreboard.getTeam(
+                                                                                            teamName
+                                                                                    );
+
+
+                                                                            if (team == null) {
+
+                                                                                context.getSource()
+                                                                                        .sendError(
+                                                                                                Text.literal(
+                                                                                                        "Unknown scoreboard team."
+                                                                                                )
+                                                                                        );
+
+                                                                                return 0;
+                                                                            }
+
+
+                                                                            team.setFriendlyFireAllowed(
+                                                                                    enabled
+                                                                            );
+
+
+                                                                            context.getSource()
+                                                                                    .sendFeedback(
+                                                                                            () -> Text.literal(
+                                                                                                    "Friendly fire for "
+                                                                                                            + teamName
+                                                                                                            + " set to "
+                                                                                                            + enabled
+                                                                                            ).formatted(Formatting.GREEN),
+                                                                                            true
+                                                                                    );
+
+
+                                                                            return 1;
+
+                                                                        })
+                                                        )
+                                        )
+                                )
+                        )
         );
     }
 }
+
