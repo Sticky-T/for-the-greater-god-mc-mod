@@ -18,7 +18,8 @@ public class FTGGCommands {
         dispatcher.register(
                 CommandManager.literal("ftggteam")
 
-                        // /ftggteam help
+
+                        // HELP
                         .then(CommandManager.literal("help")
                                 .executes(context -> {
 
@@ -26,21 +27,19 @@ public class FTGGCommands {
                                             context.getSource().getPlayer();
 
                                     player.sendMessage(
-                                            Text.literal(
-                                                    """
-                                                    For The Greater God Commands:
-        
-                                                    /ftggteam join <team>
-                                                    /ftggteam leave
-                                                    /ftggteam info
-        
-                                                    Teams:
-                                                    Zeus
-                                                    Kronos
-                                                    Hades
-                                                    Poseidon
-                                                    """
-                                            ).formatted(Formatting.RED),
+                                            Text.literal("""
+                                    For The Greater God Commands:
+
+                                    /ftggteam join <team>
+                                    /ftggteam leave
+                                    /ftggteam info
+
+                                    Teams:
+                                    Zeus
+                                    Kronos
+                                    Hades
+                                    Poseidon
+                                    """).formatted(Formatting.RED),
                                             false
                                     );
 
@@ -49,30 +48,27 @@ public class FTGGCommands {
                         )
 
 
-                        // /ftggteam info
+                        // INFO
                         .then(CommandManager.literal("info")
                                 .executes(context -> {
 
                                     ServerPlayerEntity player =
                                             context.getSource().getPlayer();
 
-                                    Scoreboard scoreboard =
-                                            player.getServer().getScoreboard();
 
-                                    Team team =
-                                            scoreboard.getTeam(player.getNameForScoreboard());
+                                    TeamData data =
+                                            TeamData.get(
+                                                    player.getServer().getOverworld()
+                                            );
 
-                                    if (team != null) {
 
-                                        player.sendMessage(
-                                                Text.literal(
-                                                        "Your god team: "
-                                                                + team.getName()
-                                                ).formatted(Formatting.GREEN),
-                                                false
-                                        );
+                                    String team =
+                                            data.getTeam(
+                                                    player.getUuid()
+                                            );
 
-                                    } else {
+
+                                    if(team == null) {
 
                                         player.sendMessage(
                                                 Text.literal(
@@ -80,6 +76,15 @@ public class FTGGCommands {
                                                 ).formatted(Formatting.RED),
                                                 false
                                         );
+
+                                    } else {
+
+                                        player.sendMessage(
+                                                Text.literal(
+                                                        "Your god team: " + team
+                                                ).formatted(Formatting.GREEN),
+                                                false
+                                        );
                                     }
 
                                     return 1;
@@ -87,40 +92,27 @@ public class FTGGCommands {
                         )
 
 
-                        // /ftggteam leave
+                        // LEAVE
                         .then(CommandManager.literal("leave")
                                 .executes(context -> {
 
                                     ServerPlayerEntity player =
                                             context.getSource().getPlayer();
 
-                                    Scoreboard scoreboard =
-                                            player.getServer().getScoreboard();
 
-
-                                    Team team =
-                                            scoreboard.getTeam(
-                                                    player.getNameForScoreboard()
+                                    TeamData data =
+                                            TeamData.get(
+                                                    player.getServer().getOverworld()
                                             );
 
 
-                                    if (team != null) {
+                                    String oldTeam =
+                                            data.getTeam(
+                                                    player.getUuid()
+                                            );
 
-                                        scoreboard.removeScoreHolderFromTeam(
-                                                player.getNameForScoreboard(),
-                                                team
-                                        );
 
-                                        player.sendMessage(
-                                                Text.literal(
-                                                        "You left "
-                                                                + team.getName()
-                                                                + "."
-                                                ),
-                                                false
-                                        );
-
-                                    } else {
+                                    if(oldTeam == null) {
 
                                         player.sendMessage(
                                                 Text.literal(
@@ -128,91 +120,153 @@ public class FTGGCommands {
                                                 ).formatted(Formatting.RED),
                                                 false
                                         );
+
+                                        return 0;
                                     }
+
+
+                                    data.removeTeam(
+                                            player.getUuid()
+                                    );
+
+
+                                    Scoreboard scoreboard =
+                                            player.getServer().getScoreboard();
+
+
+                                    Team scoreboardTeam =
+                                            scoreboard.getTeam(oldTeam);
+
+
+                                    if(scoreboardTeam != null) {
+
+                                        scoreboard.removeScoreHolderFromTeam(
+                                                player.getNameForScoreboard(),
+                                                scoreboardTeam
+                                        );
+                                    }
+
+
+                                    player.sendMessage(
+                                            Text.literal(
+                                                    "You left "
+                                                            + oldTeam
+                                                            + "."
+                                            ).formatted(Formatting.GOLD),
+                                            false
+                                    );
+
 
                                     return 1;
                                 })
                         )
 
 
-                        // /ftggteam join <team>
+                        // JOIN
                         .then(CommandManager.literal("join")
                                 .then(CommandManager.argument(
-                                                        "team",
-                                                        StringArgumentType.word()
-                                                )
+                                                "team",
+                                                StringArgumentType.word()
+                                        )
 
-                                                .executes(context -> {
-
-                                                    ServerPlayerEntity player =
-                                                            context.getSource().getPlayer();
-
-                                                    String chosen =
-                                                            StringArgumentType.getString(
-                                                                    context,
-                                                                    "team"
-                                                            );
+                                        .executes(context -> {
 
 
-                                                    Scoreboard scoreboard =
-                                                            player.getServer()
-                                                                    .getScoreboard();
+                                            ServerPlayerEntity player =
+                                                    context.getSource().getPlayer();
 
 
-                                                    Team newTeam =
-                                                            scoreboard.getTeam(chosen);
+                                            String chosen =
+                                                    StringArgumentType.getString(
+                                                            context,
+                                                            "team"
+                                                    );
 
 
-                                                    if (newTeam == null) {
-
-                                                        player.sendMessage(
-                                                                Text.literal(
-                                                                        "Unknown team. Use Zeus, Kronos, Hades, or Poseidon."
-                                                                ).formatted(Formatting.RED),
-                                                                false
-                                                        );
-
-                                                        return 0;
-                                                    }
+                                            Scoreboard scoreboard =
+                                                    player.getServer().getScoreboard();
 
 
-                                                    Team oldTeam =
-                                                            scoreboard.getTeam(
-                                                                    player.getNameForScoreboard()
-                                                            );
+                                            Team newTeam =
+                                                    scoreboard.getTeam(chosen);
 
 
-                                                    if (oldTeam != null) {
 
-                                                        scoreboard.removeScoreHolderFromTeam(
-                                                                player.getNameForScoreboard(),
-                                                                oldTeam
-                                                        );
-                                                    }
+                                            if(newTeam == null) {
+
+                                                player.sendMessage(
+                                                        Text.literal(
+                                                                "Unknown team. Use Zeus, Kronos, Hades, or Poseidon."
+                                                        ).formatted(Formatting.RED),
+                                                        false
+                                                );
+
+                                                return 0;
+                                            }
 
 
-                                                    scoreboard.addScoreHolderToTeam(
+
+                                            TeamData data =
+                                                    TeamData.get(
+                                                            player.getServer().getOverworld()
+                                                    );
+
+
+
+                                            String oldTeam =
+                                                    data.getTeam(
+                                                            player.getUuid()
+                                                    );
+
+
+
+                                            // remove old scoreboard team
+                                            if(oldTeam != null) {
+
+                                                Team oldScoreboardTeam =
+                                                        scoreboard.getTeam(oldTeam);
+
+
+                                                if(oldScoreboardTeam != null) {
+
+                                                    scoreboard.removeScoreHolderFromTeam(
                                                             player.getNameForScoreboard(),
-                                                            newTeam
+                                                            oldScoreboardTeam
                                                     );
+                                                }
+                                            }
 
 
-                                                    player.sendMessage(
-                                                            Text.literal(
-                                                                    "Joined "
-                                                                            + newTeam.getName()
-                                                                            + "!"
-                                                            ).formatted(
-                                                                    Formatting.GOLD
-                                                            ),
-                                                            false
-                                                    );
+
+                                            // save permanently
+                                            data.setTeam(
+                                                    player.getUuid(),
+                                                    chosen
+                                            );
 
 
-                                                    return 1;
 
-                                                })
-                                )
+                                            // update scoreboard display
+                                            scoreboard.addScoreHolderToTeam(
+                                                    player.getNameForScoreboard(),
+                                                    newTeam
+                                            );
+
+
+
+                                            player.sendMessage(
+                                                    Text.literal(
+                                                            "Joined "
+                                                                    + chosen
+                                                                    + "!"
+                                                    ).formatted(Formatting.GOLD),
+                                                    false
+                                            );
+
+
+                                            return 1;
+
+                                        }))
                         )
         );
     }
