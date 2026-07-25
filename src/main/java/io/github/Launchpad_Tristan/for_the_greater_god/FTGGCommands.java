@@ -3,6 +3,7 @@ package io.github.Launchpad_Tristan.for_the_greater_god;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import net.minecraft.command.argument.EntityArgumentType;
 
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -421,10 +422,9 @@ public class FTGGCommands {
                                                         )
                                                         .then(CommandManager.argument(
                                                                                 "player",
-                                                                                StringArgumentType.word()
+                                                                                EntityArgumentType.player()
                                                                         )
                                                                         .executes(context -> {
-
 
                                                                             String team =
                                                                                     StringArgumentType.getString(
@@ -434,30 +434,10 @@ public class FTGGCommands {
 
 
                                                                             ServerPlayerEntity target =
-                                                                                    context.getSource()
-                                                                                            .getServer()
-                                                                                            .getPlayerManager()
-                                                                                            .getPlayer(
-                                                                                                    java.util.UUID.fromString(
-                                                                                                            StringArgumentType.getString(
-                                                                                                                    context,
-                                                                                                                    "player"
-                                                                                                            )
-                                                                                                    )
-                                                                                            );
-
-
-                                                                            if (target == null) {
-
-                                                                                context.getSource()
-                                                                                        .sendError(
-                                                                                                Text.literal(
-                                                                                                        "Player not found."
-                                                                                                )
-                                                                                        );
-
-                                                                                return 0;
-                                                                            }
+                                                                                    EntityArgumentType.getPlayer(
+                                                                                            context,
+                                                                                            "player"
+                                                                                    );
 
 
                                                                             TeamData data =
@@ -487,11 +467,11 @@ public class FTGGCommands {
 
 
                                                                             return 1;
-
                                                                         })
                                                         )
                                         )
                                 )
+
 
 
                                 // /ftggteam admin friendlyfire <team> <true/false>
