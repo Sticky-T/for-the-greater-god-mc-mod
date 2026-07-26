@@ -41,6 +41,10 @@ public class For_the_greater_god implements ModInitializer {
         ServerTickEvents.END_SERVER_TICK.register(BaseProtection::tick);
 
         System.out.println("[For The Greater God] Loaded!");
+
+        ModItems.initialize();
+
+        ModComponents.initialize();
     }
 
 

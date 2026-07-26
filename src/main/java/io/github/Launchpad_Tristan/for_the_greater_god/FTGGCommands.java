@@ -12,6 +12,10 @@ import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.math.BlockPos;
+import java.util.Set;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
+import net.minecraft.server.world.ServerWorld;
 
 public class FTGGCommands {
 
@@ -343,6 +347,74 @@ public class FTGGCommands {
 
                                             return 1;
                                         })
+
+                                        // /ftggteam base tp
+                                        .then(CommandManager.literal("tp")
+                                                .executes(context -> {
+
+                                                    ServerPlayerEntity player =
+                                                            context.getSource().getPlayer();
+
+                                                    TeamData data =
+                                                            TeamData.get(
+                                                                    player.getServer().getOverworld()
+                                                            );
+
+                                                    String team =
+                                                            data.getTeam(
+                                                                    player.getUuid()
+                                                            );
+
+                                                    if (team == null) {
+
+                                                        player.sendMessage(
+                                                                Text.literal(
+                                                                        "You are not in a team."
+                                                                ).formatted(Formatting.RED),
+                                                                false
+                                                        );
+
+                                                        return 0;
+                                                    }
+
+                                                    BlockPos base =
+                                                            data.getBase(team);
+
+                                                    if (base == null) {
+
+                                                        player.sendMessage(
+                                                                Text.literal(
+                                                                        "Your team does not have a base set."
+                                                                ).formatted(Formatting.RED),
+                                                                false
+                                                        );
+
+                                                        return 0;
+                                                    }
+
+                                                    ServerWorld world = (ServerWorld) player.getWorld();
+
+                                                    player.teleport(
+                                                            world,
+                                                            base.getX() + 0.5,
+                                                            base.getY() + 1,
+                                                            base.getZ() + 0.5,
+                                                            Set.<PositionFlag>of(),
+                                                            player.getYaw(),
+                                                            player.getPitch(),
+                                                            false
+                                                    );
+
+                                                    player.sendMessage(
+                                                            Text.literal(
+                                                                    "Teleported to your team base."
+                                                            ).formatted(Formatting.GREEN),
+                                                            false
+                                                    );
+
+                                                    return 1;
+                                                })
+                                        )
                                 )
 
 
