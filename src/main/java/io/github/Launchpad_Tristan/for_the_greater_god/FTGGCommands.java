@@ -80,7 +80,7 @@ public class FTGGCommands {
 
                                         player.sendMessage(
                                                 Text.literal(
-                                                        "You are not in a god team."
+                                                        "You are not on a team."
                                                 ).formatted(Formatting.RED),
                                                 false
                                         );
@@ -89,7 +89,7 @@ public class FTGGCommands {
 
                                         player.sendMessage(
                                                 Text.literal(
-                                                        "Your god team: " + team
+                                                        "Your team: " + team
                                                 ).formatted(Formatting.GREEN),
                                                 false
                                         );
