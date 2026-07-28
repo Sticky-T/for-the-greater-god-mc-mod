@@ -3,31 +3,34 @@ package io.github.Launchpad_Tristan.for_the_greater_god.mixin;
 import io.github.Launchpad_Tristan.for_the_greater_god.DivineGear;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.collection.DefaultedList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
 
-    @Redirect(
+    @Inject(
             method = "dropInventory",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/player/PlayerEntity;dropItem(Lnet/minecraft/item/ItemStack;Z)Lnet/minecraft/entity/ItemEntity;"
-            )
+            at = @At("HEAD")
     )
-    private net.minecraft.entity.ItemEntity preventDivineDeathDrop(
-            PlayerEntity player,
-            ItemStack stack,
-            boolean throwRandomly
-    ) {
+    private void protectDivineGearFromDeath(CallbackInfo ci) {
 
-        if (DivineGear.isDivineGear(stack)) {
-            return null;
+        PlayerEntity player = (PlayerEntity) (Object) this;
+
+        for (int i = 0; i < player.getInventory().size(); i++) {
+
+            ItemStack stack = player.getInventory().getStack(i);
+
+            if (DivineGear.isDivineGear(stack)) {
+
+                // Make it not count as a droppable item
+                player.getInventory().setStack(i, ItemStack.EMPTY);
+
+                // Put it back after drops happen
+                player.getInventory().insertStack(stack);
+            }
         }
-
-        return player.dropItem(stack, throwRandomly);
     }
 }
