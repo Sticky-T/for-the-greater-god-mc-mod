@@ -45,6 +45,10 @@ public class For_the_greater_god implements ModInitializer {
         ModItems.initialize();
 
         ModComponents.initialize();
+
+        TeamEvents.initialize();
+
+        DivineGearEvents.register();
     }
 
 

@@ -14,6 +14,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import java.util.Set;
+import java.util.UUID;
+
 import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.world.ServerWorld;
 
@@ -41,7 +43,7 @@ public class FTGGCommands {
                                                     /ftggteam join <team>
                                                     /ftggteam leave
                                                     /ftggteam info
-                                                    /ftggteam base
+                                                    /ftggteam base <set, tp, info>
 
                                                     Teams:
                                                     Zeus
@@ -126,6 +128,18 @@ public class FTGGCommands {
                                                     player.getUuid()
                                             );
 
+                                    if (oldTeam != null && data.isLeader(oldTeam, player.getUuid())) {
+
+                                        player.sendMessage(
+                                                Text.literal(
+                                                        "You must transfer leadership before leaving your team."
+                                                ).formatted(Formatting.RED),
+                                                false
+                                        );
+
+                                        return 0;
+                                    }
+
 
                                     if (oldTeam == null) {
 
@@ -143,6 +157,8 @@ public class FTGGCommands {
                                     data.removeTeam(
                                             player.getUuid()
                                     );
+
+                                    TeamGear.removeGear(player);
 
 
                                     Scoreboard scoreboard =
@@ -247,11 +263,23 @@ public class FTGGCommands {
                                                 }
                                             }
 
+                                            if (oldTeam != null) {
+                                                TeamGear.removeGear(player);
+                                            }
 
                                             data.setTeam(
                                                     player.getUuid(),
                                                     chosen
                                             );
+
+                                            boolean leader = data.isLeader(chosen, player.getUuid());
+
+                                            TeamGear.giveGear(
+                                                    player,
+                                                    chosen,
+                                                    leader
+                                            );
+
 
 
                                             scoreboard.addScoreHolderToTeam(
@@ -519,11 +547,34 @@ public class FTGGCommands {
                                                                                                     .getOverworld()
                                                                                     );
 
+                                                                            String playerTeam = data.getTeam(target.getUuid());
+
+                                                                            if (!team.equals(playerTeam)) {
+
+                                                                                context.getSource().sendError(
+                                                                                        Text.literal(target.getName().getString() + " is not on the " + team + " team.")
+                                                                                );
+
+                                                                                return 0;
+                                                                            }
+
+                                                                            UUID previousLeader = data.getLeader(team);
 
                                                                             data.setLeader(
                                                                                     team,
                                                                                     target.getUuid()
                                                                             );
+
+                                                                            if (team.equals(data.getTeam(target.getUuid()))) {
+
+                                                                                TeamGear.removeGear(target);
+
+                                                                                TeamGear.giveGear(
+                                                                                        target,
+                                                                                        team,
+                                                                                        true
+                                                                                );
+                                                                            }
 
 
                                                                             context.getSource()
@@ -537,6 +588,31 @@ public class FTGGCommands {
                                                                                             true
                                                                                     );
 
+                                                                            if (previousLeader != null && !previousLeader.equals(target.getUuid())) {
+
+                                                                                ServerPlayerEntity oldLeader =
+                                                                                        context.getSource()
+                                                                                                .getServer()
+                                                                                                .getPlayerManager()
+                                                                                                .getPlayer(previousLeader);
+
+                                                                                if (oldLeader != null) {
+
+                                                                                    String oldLeaderTeam =
+                                                                                            data.getTeam(oldLeader.getUuid());
+
+                                                                                    if (oldLeaderTeam != null) {
+
+                                                                                        TeamGear.removeGear(oldLeader);
+
+                                                                                        TeamGear.giveGear(
+                                                                                                oldLeader,
+                                                                                                oldLeaderTeam,
+                                                                                                false
+                                                                                        );
+                                                                                    }
+                                                                                }
+                                                                            }
 
                                                                             return 1;
                                                                         })
