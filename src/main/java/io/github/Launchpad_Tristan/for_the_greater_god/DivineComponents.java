@@ -4,7 +4,6 @@ import net.minecraft.item.ItemStack;
 
 public class DivineComponents {
 
-
     public static void setAbility(
             ItemStack stack,
             String god,
@@ -24,10 +23,7 @@ public class DivineComponents {
     }
 
 
-
-    public static boolean isRelic(
-            ItemStack stack
-    ) {
+    public static boolean isRelic(ItemStack stack) {
 
         return stack.contains(
                 ModComponents.DIVINE_RELIC
@@ -36,14 +32,60 @@ public class DivineComponents {
     }
 
 
-
-    public static DivineRelicData getData(
-            ItemStack stack
-    ) {
+    public static DivineRelicData getData(ItemStack stack) {
 
         return stack.get(
                 ModComponents.DIVINE_RELIC
         );
+
+    }
+
+
+    public static boolean hasGod(
+            ItemStack stack,
+            String god
+    ) {
+
+        if (!isRelic(stack)) {
+            return false;
+        }
+
+        DivineRelicData data = getData(stack);
+
+        return data != null
+                && data.god().equalsIgnoreCase(god);
+
+    }
+
+
+    public static boolean hasAbility(
+            ItemStack stack,
+            String ability
+    ) {
+
+        if (!isRelic(stack)) {
+            return false;
+        }
+
+        DivineRelicData data = getData(stack);
+
+        return data != null
+                && data.ability().equalsIgnoreCase(ability);
+
+    }
+
+
+    public static int getLevel(ItemStack stack) {
+
+        if (!isRelic(stack)) {
+            return 0;
+        }
+
+        DivineRelicData data = getData(stack);
+
+        return data == null
+                ? 0
+                : data.level();
 
     }
 

@@ -302,12 +302,12 @@ public class FTGGCommands {
 
                                         }))
                         )
-                        // ==========================
-                        // BASE COMMANDS
-                        // ==========================
                         .then(CommandManager.literal("base")
 
+
+                                // ==========================
                                 // /ftggteam base set
+                                // ==========================
                                 .then(CommandManager.literal("set")
                                         .executes(context -> {
 
@@ -322,9 +322,7 @@ public class FTGGCommands {
 
 
                                             String team =
-                                                    data.getTeam(
-                                                            player.getUuid()
-                                                    );
+                                                    data.getTeam(player.getUuid());
 
 
                                             if (team == null) {
@@ -340,10 +338,7 @@ public class FTGGCommands {
                                             }
 
 
-                                            if (!data.isLeader(
-                                                    team,
-                                                    player.getUuid()
-                                            )) {
+                                            if (!data.isLeader(team, player.getUuid())) {
 
                                                 player.sendMessage(
                                                         Text.literal(
@@ -364,10 +359,7 @@ public class FTGGCommands {
 
                                             player.sendMessage(
                                                     Text.literal(
-                                                            "Base set for "
-                                                                    + team
-                                                                    + " at "
-                                                                    + player.getBlockPos()
+                                                            "Base set!"
                                                     ).formatted(Formatting.GREEN),
                                                     false
                                             );
@@ -375,79 +367,14 @@ public class FTGGCommands {
 
                                             return 1;
                                         })
-
-                                        // /ftggteam base tp
-                                        .then(CommandManager.literal("tp")
-                                                .executes(context -> {
-
-                                                    ServerPlayerEntity player =
-                                                            context.getSource().getPlayer();
-
-                                                    TeamData data =
-                                                            TeamData.get(
-                                                                    player.getServer().getOverworld()
-                                                            );
-
-                                                    String team =
-                                                            data.getTeam(
-                                                                    player.getUuid()
-                                                            );
-
-                                                    if (team == null) {
-
-                                                        player.sendMessage(
-                                                                Text.literal(
-                                                                        "You are not in a team."
-                                                                ).formatted(Formatting.RED),
-                                                                false
-                                                        );
-
-                                                        return 0;
-                                                    }
-
-                                                    BlockPos base =
-                                                            data.getBase(team);
-
-                                                    if (base == null) {
-
-                                                        player.sendMessage(
-                                                                Text.literal(
-                                                                        "Your team does not have a base set."
-                                                                ).formatted(Formatting.RED),
-                                                                false
-                                                        );
-
-                                                        return 0;
-                                                    }
-
-                                                    ServerWorld world = (ServerWorld) player.getWorld();
-
-                                                    player.teleport(
-                                                            world,
-                                                            base.getX() + 0.5,
-                                                            base.getY() + 1,
-                                                            base.getZ() + 0.5,
-                                                            Set.<PositionFlag>of(),
-                                                            player.getYaw(),
-                                                            player.getPitch(),
-                                                            false
-                                                    );
-
-                                                    player.sendMessage(
-                                                            Text.literal(
-                                                                    "Teleported to your team base."
-                                                            ).formatted(Formatting.GREEN),
-                                                            false
-                                                    );
-
-                                                    return 1;
-                                                })
-                                        )
                                 )
 
 
-                                // /ftggteam base info
-                                .then(CommandManager.literal("info")
+
+                                // ==========================
+                                // /ftggteam base tp
+                                // ==========================
+                                .then(CommandManager.literal("tp")
                                         .executes(context -> {
 
                                             ServerPlayerEntity player =
@@ -461,9 +388,7 @@ public class FTGGCommands {
 
 
                                             String team =
-                                                    data.getTeam(
-                                                            player.getUuid()
-                                                    );
+                                                    data.getTeam(player.getUuid());
 
 
                                             if (team == null) {
@@ -479,11 +404,95 @@ public class FTGGCommands {
                                             }
 
 
-                                            if (data.getBase(team) == null) {
+                                            BlockPos base =
+                                                    data.getBase(team);
+
+
+                                            if (base == null) {
 
                                                 player.sendMessage(
                                                         Text.literal(
-                                                                "Your team does not have a base set."
+                                                                "Your team does not have a base."
+                                                        ).formatted(Formatting.RED),
+                                                        false
+                                                );
+
+                                                return 0;
+                                            }
+
+
+                                            ServerWorld world =
+                                                    (ServerWorld) player.getWorld();
+
+
+                                            player.teleport(
+                                                    world,
+                                                    base.getX() + 0.5,
+                                                    base.getY() + 1,
+                                                    base.getZ() + 0.5,
+                                                    Set.of(),
+                                                    player.getYaw(),
+                                                    player.getPitch(),
+                                                    false
+                                            );
+
+
+                                            player.sendMessage(
+                                                    Text.literal(
+                                                            "Teleported to team base."
+                                                    ).formatted(Formatting.GREEN),
+                                                    false
+                                            );
+
+
+                                            return 1;
+                                        })
+                                )
+
+
+
+                                // ==========================
+                                // /ftggteam base info
+                                // ==========================
+                                .then(CommandManager.literal("info")
+                                        .executes(context -> {
+
+                                            ServerPlayerEntity player =
+                                                    context.getSource().getPlayer();
+
+
+                                            TeamData data =
+                                                    TeamData.get(
+                                                            player.getServer().getOverworld()
+                                                    );
+
+
+                                            String team =
+                                                    data.getTeam(player.getUuid());
+
+
+                                            if (team == null) {
+
+                                                player.sendMessage(
+                                                        Text.literal(
+                                                                "You are not in a team."
+                                                        ).formatted(Formatting.RED),
+                                                        false
+                                                );
+
+                                                return 0;
+                                            }
+
+
+                                            BlockPos base =
+                                                    data.getBase(team);
+
+
+                                            if (base == null) {
+
+                                                player.sendMessage(
+                                                        Text.literal(
+                                                                "No base set."
                                                         ).formatted(Formatting.RED),
                                                         false
                                                 );
@@ -494,8 +503,7 @@ public class FTGGCommands {
 
                                             player.sendMessage(
                                                     Text.literal(
-                                                            "Team base: "
-                                                                    + data.getBase(team)
+                                                            "Team base: " + base
                                                     ).formatted(Formatting.GREEN),
                                                     false
                                             );

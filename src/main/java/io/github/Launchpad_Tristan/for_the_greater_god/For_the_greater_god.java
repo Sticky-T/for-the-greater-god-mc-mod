@@ -1,5 +1,6 @@
 package io.github.Launchpad_Tristan.for_the_greater_god;
 
+import io.github.Launchpad_Tristan.for_the_greater_god.mixin.PlayerEntityMixin;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -49,6 +50,8 @@ public class For_the_greater_god implements ModInitializer {
         TeamEvents.initialize();
 
         DivineGearEvents.register();
+
+        DivineProtectionEvents.register();
     }
 
 
