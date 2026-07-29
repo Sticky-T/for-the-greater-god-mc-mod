@@ -246,6 +246,15 @@ public class DivineAbilityEvents {
                     )
             );
 
+            player.addStatusEffect(
+                    new StatusEffectInstance(
+                            StatusEffects.HASTE,
+                            40,
+                            3,
+                            false,
+                            false
+                    )
+            );
         }
 
     }

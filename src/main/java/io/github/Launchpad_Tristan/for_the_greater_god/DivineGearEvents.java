@@ -9,6 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Unit;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.server.world.ServerWorld;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,12 +46,32 @@ public class DivineGearEvents {
 
 
 
-    private static void checkInventory(PlayerEntity player) {
+    private static void checkInventory(ServerPlayerEntity player) {
 
-        for (ItemStack stack :
-                player.getInventory().getMainStacks()) {
+        // Protect relics already in inventory
+        for (ItemStack stack : player.getInventory().getMainStacks()) {
 
             protect(stack);
+
+        }
+
+        // Recover dropped relics nearby
+        ServerWorld world = player.getWorld();
+
+        for (ItemEntity item : world.getEntitiesByClass(
+                ItemEntity.class,
+                player.getBoundingBox().expand(8),
+                entity -> DivineComponents.isRelic(entity.getStack())
+        )) {
+
+            ItemStack stack = item.getStack().copy();
+
+            // Try to put it back
+            if (player.getInventory().insertStack(stack)) {
+
+                item.discard();
+
+            }
 
         }
 
