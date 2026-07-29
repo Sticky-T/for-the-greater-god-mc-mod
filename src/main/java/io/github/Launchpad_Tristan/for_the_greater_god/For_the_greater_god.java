@@ -52,6 +52,8 @@ public class For_the_greater_god implements ModInitializer {
         DivineGearEvents.register();
 
         DivineProtectionEvents.register();
+
+        DivineAbilityEvents.register();
     }
 
 
