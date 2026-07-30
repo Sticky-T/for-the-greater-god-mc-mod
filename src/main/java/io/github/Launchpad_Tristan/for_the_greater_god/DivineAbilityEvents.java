@@ -148,7 +148,7 @@ public class DivineAbilityEvents {
         // KRONOS
         // =====================
 
-        if(data.god().equals("Kronos")) {
+        if(data.god().equals("Cronus")) {
 
 
             int hits =

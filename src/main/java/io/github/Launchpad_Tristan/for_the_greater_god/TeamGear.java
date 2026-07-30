@@ -111,7 +111,7 @@ public class TeamGear {
             // =========================
             // KRONOS
             // =========================
-            case "Kronos" -> {
+            case "Cronus" -> {
 
                 ItemStack scythe;
 
@@ -126,7 +126,7 @@ public class TeamGear {
 
                     DivineComponents.setAbility(
                             scythe,
-                            "Kronos",
+                            "Cronus",
                             "Unholy Edge",
                             3
                     );
