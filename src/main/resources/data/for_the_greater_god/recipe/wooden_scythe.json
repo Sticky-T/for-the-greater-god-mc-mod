@@ -6,14 +6,8 @@
     "S  "
   ],
   "key": {
-    "M": {
-      "fabric:type": "minecraft:item",
-      "tag": "minecraft:planks"
-    },
-    "S": {
-      "fabric:type": "minecraft:item",
-      "item": "minecraft:stick"
-    }
+    "M": "#minecraft:planks",
+    "S": "minecraft:stick"
   },
   "result": {
     "id": "for_the_greater_god:wooden_scythe",

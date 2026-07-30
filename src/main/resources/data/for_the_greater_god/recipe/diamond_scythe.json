@@ -6,14 +6,8 @@
     "S  "
   ],
   "key": {
-    "M": {
-      "fabric:type": "minecraft:item",
-      "item": "minecraft:diamond"
-    },
-    "S": {
-      "fabric:type": "minecraft:item",
-      "item": "minecraft:stick"
-    }
+    "M": "minecraft:diamond",
+    "S": "minecraft:stick"
   },
   "result": {
     "id": "for_the_greater_god:diamond_scythe",

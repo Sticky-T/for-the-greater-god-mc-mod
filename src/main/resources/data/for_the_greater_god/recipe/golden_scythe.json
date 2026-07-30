@@ -6,14 +6,8 @@
     "S  "
   ],
   "key": {
-    "M": {
-      "fabric:type": "minecraft:item",
-      "item": "minecraft:gold_ingot"
-    },
-    "S": {
-      "fabric:type": "minecraft:item",
-      "item": "minecraft:stick"
-    }
+    "M": "minecraft:gold_ingot",
+    "S": "minecraft:stick"
   },
   "result": {
     "id": "for_the_greater_god:golden_scythe",
