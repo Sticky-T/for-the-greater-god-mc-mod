@@ -28,6 +28,30 @@ public class ModItems {
                     Identifier.of(For_the_greater_god.MOD_ID, "iron_scythe")
             );
 
+    public static final RegistryKey<Item> WOODEN_SCYTHE_KEY =
+            RegistryKey.of(
+                    RegistryKeys.ITEM,
+                    Identifier.of(For_the_greater_god.MOD_ID, "wooden_scythe")
+            );
+
+    public static final RegistryKey<Item> STONE_SCYTHE_KEY =
+            RegistryKey.of(
+                    RegistryKeys.ITEM,
+                    Identifier.of(For_the_greater_god.MOD_ID, "stone_scythe")
+            );
+
+    public static final RegistryKey<Item> GOLDEN_SCYTHE_KEY =
+            RegistryKey.of(
+                    RegistryKeys.ITEM,
+                    Identifier.of(For_the_greater_god.MOD_ID, "golden_scythe")
+            );
+
+    public static final RegistryKey<Item> DIAMOND_SCYTHE_KEY =
+            RegistryKey.of(
+                    RegistryKeys.ITEM,
+                    Identifier.of(For_the_greater_god.MOD_ID, "diamond_scythe")
+            );
+
 
     public static final Item DIVINE_GEAR = Registry.register(
             Registries.ITEM,
@@ -58,6 +82,42 @@ public class ModItems {
                     ToolMaterial.IRON,
                     new Item.Settings()
                             .registryKey(IRON_SCYTHE_KEY)
+            )
+    );
+
+    public static final Item WOODEN_SCYTHE = Registry.register(
+            Registries.ITEM,
+            WOODEN_SCYTHE_KEY,
+            new ScytheItem(
+                    ToolMaterial.WOOD,
+                    new Item.Settings().registryKey(WOODEN_SCYTHE_KEY)
+            )
+    );
+
+    public static final Item STONE_SCYTHE = Registry.register(
+            Registries.ITEM,
+            STONE_SCYTHE_KEY,
+            new ScytheItem(
+                    ToolMaterial.STONE,
+                    new Item.Settings().registryKey(STONE_SCYTHE_KEY)
+            )
+    );
+
+    public static final Item GOLDEN_SCYTHE = Registry.register(
+            Registries.ITEM,
+            GOLDEN_SCYTHE_KEY,
+            new ScytheItem(
+                    ToolMaterial.GOLD,
+                    new Item.Settings().registryKey(GOLDEN_SCYTHE_KEY)
+            )
+    );
+
+    public static final Item DIAMOND_SCYTHE = Registry.register(
+            Registries.ITEM,
+            DIAMOND_SCYTHE_KEY,
+            new ScytheItem(
+                    ToolMaterial.DIAMOND,
+                    new Item.Settings().registryKey(DIAMOND_SCYTHE_KEY)
             )
     );
 
