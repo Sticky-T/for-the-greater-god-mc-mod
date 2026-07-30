@@ -141,7 +141,7 @@ public class TeamGear {
 
                     DivineComponents.setAbility(
                             scythe,
-                            "Kronos",
+                            "Cronus",
                             "Sharpness",
                             3
                     );
