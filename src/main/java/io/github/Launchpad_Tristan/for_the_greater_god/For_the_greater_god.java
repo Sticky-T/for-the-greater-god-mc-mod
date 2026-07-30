@@ -20,7 +20,7 @@ public class For_the_greater_god implements ModInitializer {
 
     static {
         GOD_TEAMS.put("Zeus", Formatting.YELLOW);
-        GOD_TEAMS.put("Kronos", Formatting.DARK_GREEN);
+        GOD_TEAMS.put("Cronus", Formatting.DARK_GREEN);
         GOD_TEAMS.put("Hades", Formatting.DARK_RED);
         GOD_TEAMS.put("Poseidon", Formatting.BLUE);
     }
