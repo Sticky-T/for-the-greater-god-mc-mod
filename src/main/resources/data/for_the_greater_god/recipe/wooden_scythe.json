@@ -7,9 +7,11 @@
   ],
   "key": {
     "M": {
+      "fabric:type": "minecraft:item",
       "tag": "minecraft:planks"
     },
     "S": {
+      "fabric:type": "minecraft:item",
       "item": "minecraft:stick"
     }
   },

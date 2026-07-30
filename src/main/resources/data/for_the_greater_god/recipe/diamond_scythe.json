@@ -7,9 +7,11 @@
   ],
   "key": {
     "M": {
+      "fabric:type": "minecraft:item",
       "item": "minecraft:diamond"
     },
     "S": {
+      "fabric:type": "minecraft:item",
       "item": "minecraft:stick"
     }
   },

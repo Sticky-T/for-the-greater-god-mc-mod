@@ -7,9 +7,11 @@
   ],
   "key": {
     "M": {
+      "fabric:type": "minecraft:item",
       "item": "minecraft:gold_ingot"
     },
     "S": {
+      "fabric:type": "minecraft:item",
       "item": "minecraft:stick"
     }
   },
