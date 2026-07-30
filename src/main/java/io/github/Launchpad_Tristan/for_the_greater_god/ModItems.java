@@ -58,6 +58,7 @@ public class ModItems {
             DIVINE_GEAR_KEY,
             new ScytheItem(
                     ToolMaterial.NETHERITE,
+                    20.0f,
                     new Item.Settings()
                             .registryKey(DIVINE_GEAR_KEY)
             )
@@ -69,6 +70,7 @@ public class ModItems {
             NETHERITE_SCYTHE_KEY,
             new ScytheItem(
                     ToolMaterial.NETHERITE,
+                    9.0f,
                     new Item.Settings()
                             .registryKey(NETHERITE_SCYTHE_KEY)
             )
@@ -80,6 +82,7 @@ public class ModItems {
             IRON_SCYTHE_KEY,
             new ScytheItem(
                     ToolMaterial.IRON,
+                    5.0f,
                     new Item.Settings()
                             .registryKey(IRON_SCYTHE_KEY)
             )
@@ -90,6 +93,7 @@ public class ModItems {
             WOODEN_SCYTHE_KEY,
             new ScytheItem(
                     ToolMaterial.WOOD,
+                    2.0f,
                     new Item.Settings().registryKey(WOODEN_SCYTHE_KEY)
             )
     );
@@ -99,6 +103,7 @@ public class ModItems {
             STONE_SCYTHE_KEY,
             new ScytheItem(
                     ToolMaterial.STONE,
+                    3.0f,
                     new Item.Settings().registryKey(STONE_SCYTHE_KEY)
             )
     );
@@ -108,6 +113,7 @@ public class ModItems {
             GOLDEN_SCYTHE_KEY,
             new ScytheItem(
                     ToolMaterial.GOLD,
+                    4.0f,
                     new Item.Settings().registryKey(GOLDEN_SCYTHE_KEY)
             )
     );
@@ -117,6 +123,7 @@ public class ModItems {
             DIAMOND_SCYTHE_KEY,
             new ScytheItem(
                     ToolMaterial.DIAMOND,
+                    7.0f,
                     new Item.Settings().registryKey(DIAMOND_SCYTHE_KEY)
             )
     );

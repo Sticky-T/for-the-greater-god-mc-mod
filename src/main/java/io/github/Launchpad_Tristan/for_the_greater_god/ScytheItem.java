@@ -12,16 +12,20 @@ public class ScytheItem extends Item {
 
     public ScytheItem(
             ToolMaterial material,
+            float bonusDamage,
             Item.Settings settings
     ) {
         super(settings);
         this.material = material;
+        this.bonusDamage = bonusDamage;
     }
 
 
     public ToolMaterial getMaterial() {
         return material;
     }
+
+    private final float bonusDamage;
 
     @Override
     public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
@@ -30,7 +34,7 @@ public class ScytheItem extends Item {
             target.damage(
                     (ServerWorld) attacker.getWorld(),
                     attacker.getDamageSources().magic(),
-                    10.0f
+                    bonusDamage
             );
 
         }
