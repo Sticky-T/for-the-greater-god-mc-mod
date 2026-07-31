@@ -1,23 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "pattern": [
     " MM",
     " M ",
     "S  "
   ],
   "key": {
-    "M": {
-      "fabric:type": "minecraft:item",
-      "item": "minecraft:diamond"
-    },
     "S": {
-      "fabric:type": "minecraft:item",
       "item": "minecraft:stick"
+    },
+    "M": {
+      "item": "minecraft:diamond"
     }
   },
-
   "result": {
     "id": "for_the_greater_god:diamond_scythe",
     "count": 1
-  }
+  },
+  "show_notification": true
 }

@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "pattern": [
     " MM",
     " M ",
     "S  "
   ],
   "key": {
-    "M": {
-      "fabric:type": "minecraft:tag",
-      "tag": "minecraft:planks"
-    },
     "S": {
-      "fabric:type": "minecraft:item",
       "item": "minecraft:stick"
+    },
+    "M": {
+      "tag": "minecraft:planks"
     }
   },
   "result": {
     "id": "for_the_greater_god:wooden_scythe",
     "count": 1
-  }
+  },
+  "show_notification": true
 }
