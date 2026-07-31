@@ -227,7 +227,7 @@ public class FTGGCommands {
 
                                                 player.sendMessage(
                                                         Text.literal(
-                                                                "Unknown team. Use Zeus, Cronis, Hades, or Poseidon."
+                                                                "Unknown team. Use Zeus, Cronus, Hades, or Poseidon."
                                                         ).formatted(Formatting.RED),
                                                         false
                                                 );
