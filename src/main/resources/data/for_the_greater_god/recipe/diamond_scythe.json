@@ -7,12 +7,8 @@
     "S  "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "M": {
-      "item": "minecraft:diamond"
-    }
+    "S": "minecraft:stick",
+    "M": "minecraft:diamond"
   },
   "result": {
     "id": "for_the_greater_god:diamond_scythe",
