@@ -1,8 +1,14 @@
 {
   "type": "minecraft:smithing_transform",
-  "template": "minecraft:netherite_upgrade_smithing_template",
-  "base": "for_the_greater_god:diamond_scythe",
-  "addition": "minecraft:netherite_ingot",
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  },
+  "base": {
+    "item": "for_the_greater_god:diamond_scythe"
+  },
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
   "result": {
     "id": "for_the_greater_god:netherite_scythe"
   }

@@ -6,8 +6,12 @@
     "S  "
   ],
   "key": {
-    "M": "#minecraft:stone_tool_materials",
-    "S": "minecraft:stick"
+    "M": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
   },
   "result": {
     "id": "for_the_greater_god:stone_scythe",

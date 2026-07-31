@@ -6,8 +6,12 @@
     "S  "
   ],
   "key": {
-    "M": "minecraft:iron_ingot",
-    "S": "minecraft:stick"
+    "M": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
   },
   "result": {
     "id": "for_the_greater_god:iron_scythe",

@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.17.12'
+    id "net.fabricmc.fabric-loom" version "1.16.1"
     id 'maven-publish'
 }
 
@@ -11,23 +11,20 @@ base {
 }
 
 repositories {
+    maven {
+        name = "Fabric"
+        url = "https://maven.fabricmc.net/"
+    }
     mavenCentral()
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-    // Choose ONE of the following:
-
-    // Yarn mappings
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-
-    // OR Official Mojang mappings
-    // mappings loom.officialMojangMappings()
-
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
+
 
 loom {
     splitEnvironmentSourceSets()
@@ -60,25 +57,17 @@ processResources {
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
     withSourcesJar()
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
-    options.release = 21
-}
-
-publishing {
-    publications {
-        create("mavenJava", MavenPublication) {
-            from components.java
-        }
-    }
+    options.release = 25
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
