@@ -1,4 +1,4 @@
-All mod files are under the Master branch, and you can find a folder in the main branch for the compiled .jar files
+Source code is in Master branch, and all releases are in the builds folder
 
 ---------------
 Full desc below
