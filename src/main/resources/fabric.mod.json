@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "for_the_greater_god",
+  "version": "${version}",
+  "name": "For_the_Greater_God",
+  "description": "Adds several QOL features to the game. Intended for usage on Paper servers.",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/for_the_greater_god/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "io.github.Launchpad_Tristan.for_the_greater_god.client.For_the_greater_godDataGenerator"
+    ],
+    "client": [
+      "io.github.Launchpad_Tristan.for_the_greater_god.client.For_the_greater_godClient"
+    ],
+    "main": [
+      "io.github.Launchpad_Tristan.for_the_greater_god.For_the_greater_god"
+    ]
+  },
+  "mixins": [
+    "for_the_greater_god.mixins.json",
+    {
+      "config": "for_the_greater_god.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

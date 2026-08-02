@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "for_the_greater_god:item/diamond_scythe"
+  }
+}
