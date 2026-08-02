@@ -1,4 +1,4 @@
-Source code is in Master branch, and all releases are in the builds folder
+Source code is in Master branch, and all releases are in the builds folder (and no, I'm not going to include the partially finished versions or the non-major ones in the downloadables)
 
 ---------------
 Full desc below
