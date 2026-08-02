@@ -1,3 +1,9 @@
+All mod files are under the Master branch, and you can find a folder in the main branch for the compiled .jar files
+
+---------------
+Full desc below
+---------------
+
 For the Greater God (MC Mod)
 
 For the Greater God is a team-focused PvP mod that lets players align with four major factions named after ancient mythic figures: Zeus, Poseidon, Hades, and Cronus. Built for faction wars and SMP servers, the mod introduces team territory controls and powerful relic gear designed to give each faction a distinct playstyle in combat and survival.
