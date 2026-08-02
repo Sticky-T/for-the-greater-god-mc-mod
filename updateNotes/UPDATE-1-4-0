@@ -1,0 +1,6 @@
+// UPDATE-1-4-0.md
+Update 1.4.0 fixes a bug where Deathly Presence would never trigger,
+Adds a Copper scythe and crafting recipe for it, 
+Fixes a few remapping errors, 
+Updated Pirate Speak language option, 
+And also introduced some small optimizations.
