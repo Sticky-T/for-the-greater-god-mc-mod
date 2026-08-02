@@ -1,9 +1,0 @@
-For the Greater God (MC Mod)
-
-For the Greater God is a team-focused PvP mod that lets players align with four major factions named after ancient mythic figures: Zeus, Poseidon, Hades, and Cronus. Built for faction wars and SMP servers, the mod introduces team territory controls and powerful relic gear designed to give each faction a distinct playstyle in combat and survival.
-
-Server operators manage the faction hierarchy using commands to assign team leaders for each god. Operators can set these leaders directly, which grants those players buffed versions of their faction's default relics. Team leaders also have access to the base-setting command, which claims a location for their squad. Whenever a player walks into a team base they do not belong to, they are automatically hit with a slowness debuff to help defenders guard their territory against trespassers.
-
-Each team receives a specific piece of equipment that serves as its signature relic. Zeus members carry a sword forged for aggressive melee strikes, while Poseidon members wear a helmet tuned for underwater mobility and survival. Hades members also wear a helmet, though theirs is built around stealth and ambush tactics. Cronus members wield a scythe, giving their team a heavy-hitting weapon to control the pace of a fight.
-
-These relics provide powerful custom passives and triggers during combat and exploration. Zeus's sword gives every hit a 50% chance to strike the target with lightning. Poseidon's helmet grants water breathing, night vision, and haste as long as the wearer is submerged in water. Hades's helmet renders the user completely invisible while sneaking, and if they stay crouched for at least 10 seconds, their first strike out of stealth deals a guaranteed 5 hearts of bonus damage. Finally, Cronus's scythe deals 5 bonus hearts of damage and inflicts slowness on every 4th consecutive hit.
